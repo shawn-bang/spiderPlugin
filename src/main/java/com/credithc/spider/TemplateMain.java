@@ -282,7 +282,6 @@ public class TemplateMain {
         // 读入文件信息，生成connection对象
         Map<String, String> infos = getConnectionInfo(connectionsFilesPath);
         Map<String, Object> connections = getConnections(infos);
-        System.out.println(connections.size());
         // 根据既定规则分析connection数据, 生成function
         List<Function> functions = getFunctions(connections);
 
