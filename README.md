@@ -10,18 +10,19 @@
 ## 功能实现情况  
 分析可变参数主要是针对请求相同的url时，url后挂着的key-value参数和requestBody里面key-value参数的可变情况；  
 很多特殊的情况目前没有覆盖，目前覆盖的情况大体如下：  
-* 两套数据上对应的两个请求没有任何变化，会直接生成一个请求函数，所以涉及到的参数都是硬编码在代码里面；  
-* url后面挂着的key-value参数在多个对应的请求中有变化，requestBody中的key-value参数没有变化；  
-* url后面挂着的key-value参数在多个对应的请求中没变化，requestBody中的key-value参数有变化；  
-* 情况2和情况3任意变化的组合方式都是支持的；  
-* 如果reuqestBody中是json格式，目前不支持深度分析json内容中具体字段的变化，仅支持简单的整个json内容比对；  
+1. 两套数据上对应的两个请求没有任何变化，会直接生成一个请求函数，所以涉及到的参数都是硬编码在代码里面；  
+2. url后面挂着的key-value参数在多个对应的请求中有变化，requestBody中的key-value参数没有变化；  
+3. url后面挂着的key-value参数在多个对应的请求中没变化，requestBody中的key-value参数有变化；  
+4. 情况2和情况3任意变化的组合方式都是支持的；  
+5. 如果reuqestBody中是json格式，目前不支持深度分析json内容中具体字段的变化，仅支持简单的整个json内容比对；  
 
 ## 注意  
 * 内容中所有的url是指整个url的一部分(full url:http://www.xxx.com/a/b/c?n=123&y=456 那么url是指http://www.xxx.com/a/b/c);  
 * 如果url相同的请求有很多个，工具会根据url后挂着的key-value参数名+requestBody中参数名分组，生成多个函数，来支持参数组合变化的情况， 
   目前不支持多个相同的url采用了不同的请求方式(如：同时采用了GET And POST);
 
-##样例整理  
+##情况4样例整理  
+
     @MethodInfo(fileName={"131456142771442989_userLogin.do.json","131456142771442990_userLogin.do.json"},params=             {"password=batistuta&xiaobingbing","random=123456&liwei1341","validate_code=4529&9999","cust_no=shawn&liwei1341"})
     public ResponseEntity<String> doPOSTuserLogindo(
         CookieStoreRestTemplate restTemplate,
