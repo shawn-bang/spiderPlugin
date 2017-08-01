@@ -21,7 +21,8 @@
 * 如果url相同的请求有很多个，工具会根据url后挂着的key-value参数名+requestBody中参数名分组，生成多个函数，来支持参数组合变化的情况， 
   目前不支持多个相同的url采用了不同的请求方式(如：同时采用了GET And POST);
 
-##情况4样例整理  
+## 样例整理  
+情况4.样例整理  
 
     @MethodInfo(fileName={"131456142771442989_userLogin.do.json","131456142771442990_userLogin.do.json"},params= {"password=batistuta&xiaobingbing","random=123456&liwei1341","validate_code=4529&9999","cust_no=shawn&liwei1341"})
     public ResponseEntity<String> doPOSTuserLogindo(
