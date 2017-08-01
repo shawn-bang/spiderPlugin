@@ -22,8 +22,7 @@
   目前不支持多个相同的url采用了不同的请求方式(如：同时采用了GET And POST);
 
 ##样例整理  
-
-        @MethodInfo(fileName={"131456142771442989_userLogin.do.json","131456142771442990_userLogin.do.json"},params={"password=batistuta&xiaobingbing","random=123456&liwei1341","validate_code=4529&9999","cust_no=shawn&liwei1341"})
+    @MethodInfo(fileName={"131456142771442989_userLogin.do.json","131456142771442990_userLogin.do.json"},params=             {"password=batistuta&xiaobingbing","random=123456&liwei1341","validate_code=4529&9999","cust_no=shawn&liwei1341"})
     public ResponseEntity<String> doPOSTuserLogindo(
         CookieStoreRestTemplate restTemplate,
         String password,
