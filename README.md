@@ -21,4 +21,34 @@
 * 如果url相同的请求有很多个，工具会根据url后挂着的key-value参数名+requestBody中参数名分组，生成多个函数，来支持参数组合变化的情况， 
   目前不支持多个相同的url采用了不同的请求方式(如：同时采用了GET And POST);
 
-##样例整理
+##样例整理  
+
+        @MethodInfo(fileName={"131456142771442989_userLogin.do.json","131456142771442990_userLogin.do.json"},params={"password=batistuta&xiaobingbing","random=123456&liwei1341","validate_code=4529&9999","cust_no=shawn&liwei1341"})
+    public ResponseEntity<String> doPOSTuserLogindo(
+        CookieStoreRestTemplate restTemplate,
+        String password,
+        String random,
+        String validate_code,
+        String cust_no
+    ) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Origin", "http");
+        headers.set("Accept", "text/javascript, text/html, application/xml, text/xml, */*");
+        headers.set("X-Requested-With", "XMLHttpRequest");
+        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36");
+        headers.set("Referer", "http");
+        headers.set("Host", "www.hzgjj.gov.cn");
+        headers.set("Pragma", "no-cache");
+        headers.set("DNT", "1");
+        headers.set("Accept-Encoding", "gzip, deflate");
+        headers.set("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+        headers.set("Cache-Control", "no-cache");
+        headers.set("X-Prototype-Version", "1.6.0.3");
+        headers.set("Accept-Language", "zh-CN,zh;q=0.8");
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("_", "");
+        map.add("random", random);
+        ResponseEntity<String> response = restTemplate.exchange("http://www.hzgjj.gov.cn:8080/WebAccounts/userLogin.do?user_type=3&cust_type=2&password=" + URLEncoder.encode(password,"UTF-8") + "&validate_code=" + URLEncoder.encode(validate_code,"UTF-8") + "&cust_no=" + URLEncoder.encode(cust_no,"UTF-8") + "", HTTP.POST, new HttpEntity<>(map, headers), String.class);
+
+        return response;
+    }
