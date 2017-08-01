@@ -1,7 +1,7 @@
 # spiderPlugin
 
 ## 目标  
-    为解决爬取过程中通过Spring RestTemplate重复性发送http/https请求的工作，使得该过程可以通过fiddler代理爬取(通过二次开发c#API)到的请求格式化文件自动生成相关的发送请求代码(基础的爬取API)，并分析出请求之间的相关关系找到可变参数体现在生成代码上;  
+为解决爬取过程中通过Spring RestTemplate重复性发送http/https请求的工作，使得该过程可以通过fiddler代理爬取(通过二次开发c#API)到的请求格式化文件自动生成相关的发送请求代码(基础的爬取API)，并分析出请求之间的相关关系找到可变参数体现在生成代码上;  
 
 ## 技术相关  
 该项目使用的主要技术是freemarker，通过freemarker模板生成可用的java代码;
