@@ -465,8 +465,8 @@ public class TemplateMain {
                 url = url + name + "=" + "\" + " + "URLEncoder.encode(" + name + ",\"UTF-8\")" + " + \"" + "&";
             }
         }
-        StringUtils.strip(url.toString(), "?");
-        return StringUtils.strip(url.toString(), "&");
+        url = StringUtils.strip(url, "?");
+        return StringUtils.strip(url, "&");
     }
 
     /**

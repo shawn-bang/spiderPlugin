@@ -10,9 +10,9 @@ import org.springframework.http.HttpMethod;
 public class ${ className } {
 
 <#list functions as function>
-    @MethodInfo(fileName=${ function.fileNames }<#if function.factors??>,params={<#list function.factors?keys as key><#assign fieldName=key><#assign realFieldName=fieldName?replace("@", "")>"${ realFieldName }=${ function.factors[key] }"<#if key_has_next >,</#if></#list>}</#if>)
+    @MethodInfo(fileName=${ function.fileNames }<#if (function.factors?? && function.factors?size > 0)>,params={<#list function.factors?keys as key><#assign fieldName=key><#assign realFieldName=fieldName?replace("@", "")>"${ realFieldName }=${ function.factors[key] }"<#if key_has_next >,</#if></#list>}</#if>)
     public ResponseEntity<${ function.resultType }> ${ function.functionName }(
-        CookieStoreRestTemplate restTemplate<#if function.factors??>,</#if>
+        CookieStoreRestTemplate restTemplate<#if (function.factors?? && function.factors?size > 0)>,</#if>
 <#if function.factors??>
     <#list function.factors?keys as key>
         <#assign fieldName=key>
@@ -66,7 +66,7 @@ public class ${ className } {
 </#if>
 </#if>
 </#if>
-        ResponseEntity<${ function.resultType }> response = restTemplate.exchange("${ function.url }", ${ function.httpMethod }, new HttpEntity<>(map, headers), ${ function.resultType }.class);
+        ResponseEntity<${ function.resultType }> response = restTemplate.exchange("${ function.url }", ${ function.httpMethod }, new HttpEntity<>(<#if function.params?? || function.factors??>map<#else>null</#if>, headers), ${ function.resultType }.class);
 
         return response;
     }
