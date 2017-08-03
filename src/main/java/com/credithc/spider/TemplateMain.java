@@ -183,7 +183,7 @@ public class TemplateMain {
                 function.setFileNames("{" + "\"" + connection.getFileName() + "\"" + "}");
                 function.setFunctionName("do" + connection.getRequestMethod() + getFunctionName(connection.getFileName()));
                 function.setHeaders(connection.getRequestHeaders());
-                function.setHttpMethod("HTTP" + "." + connection.getRequestMethod());
+                function.setHttpMethod("HttpMethod" + "." + connection.getRequestMethod());
                 function.setUrl(connection.getRequestUrl());
                 function.setResultType(getReturnType(connection.getResponseHeaders().get("Content-Type")));
                 if (connection.isRequestBodyIsJson()){
