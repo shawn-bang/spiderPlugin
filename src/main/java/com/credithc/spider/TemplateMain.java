@@ -71,7 +71,7 @@ public class TemplateMain {
             // 统一base64解密一次
             if (StringUtils.isNotBlank(object.getString("request_body"))){
                 String requestBody = new String(org.apache.commons.codec.binary.Base64.decodeBase64(object.getString("request_body")));
-                connection.setRequestBody(StringEscapeUtils.escapeJava(URLDecoder.decode(requestBody, "UTF-8")));
+                connection.setRequestBody(URLDecoder.decode(requestBody, "UTF-8"));
             }else {
                 connection.setRequestBody("");
             }
@@ -397,6 +397,7 @@ public class TemplateMain {
             key = matcher.group(1);
         }
         if (StringUtils.isBlank(key)){
+            System.out.println(fileName);
             throw new Exception("文件名格式异常");
         }
         return key.replaceAll("[^0-9a-zA-Z]", "");
