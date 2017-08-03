@@ -61,10 +61,6 @@ public class TemplateMain {
             String fileName = entry.getKey();
             String content = entry.getValue();
             JSONObject object = JSON.parseObject(content);
-            // 直接丢掉, 没有在分析范围内
-            if (object.getString("request_method").equals("CONNECT")){
-                continue;
-            }
 
             Connection connection = new Connection();
             connection.setFileName(fileName);
@@ -80,6 +76,14 @@ public class TemplateMain {
                 connection.setRequestBody("");
             }
             connection.setResponseHeaders(getHeaders(object.getString("response_headers")));
+            String contentType = connection.getResponseHeaders().get("Content-Type");
+            /**
+             * 根据规则过滤请求,目前css文件请求不在分析范围,CONNECT方法请求不在分析范围
+             */
+            if (filterConnectionByContentType(contentType) || filterConnectionByRequestMethod(connection.getRequestMethod())){
+                continue;
+            }
+
             connection.setResponseBody(object.getString("response_body"));
 
             String url = connection.getRequestUrl();
@@ -378,13 +382,43 @@ public class TemplateMain {
      */
     public static String getReturnType(String contentType){
         if (StringUtils.isBlank(contentType)) return "String";
-        Pattern pattern= Pattern.compile("gif|icon|jpeg|jpg|png|bmp");
+        Pattern pattern = Pattern.compile("gif|icon|jpeg|jpg|png|bmp");
         Matcher matcher = pattern.matcher(contentType);
         if (matcher.find()){
             return "byte[]";
         }else {
             return "String";
         }
+    }
+
+    /**
+     * 根据Content-Type过滤请求
+     * @param contentType
+     * @return
+     */
+    public static boolean filterConnectionByContentType(String contentType){
+        if (StringUtils.isBlank(contentType)) return false;
+        Pattern pattern = Pattern.compile("text/css");
+        Matcher matcher = pattern.matcher(contentType);
+        if (matcher.find()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 根据请求方法过滤请求
+     * @param requestMethod
+     * @return
+     */
+    public static boolean filterConnectionByRequestMethod(String requestMethod){
+        if (StringUtils.isBlank(requestMethod)) return true;
+        Pattern pattern = Pattern.compile("CONNECT");
+        Matcher matcher = pattern.matcher(requestMethod);
+        if (matcher.find()){
+            return true;
+        }
+        return false;
     }
 
     /**
