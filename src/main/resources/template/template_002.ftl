@@ -29,7 +29,7 @@ public class ${ className } {
         headers.set("${ key }", "${ function.headers[key] }");
     </#list>
 </#if>
-<#if function.httpMethod != "HTTP.GET">
+<#if function.httpMethod != "HttpMethod.GET">
 <#if function.requestBodyIsJson>
 <#if function.params??>
     <#if function.params["requestBodyJson@"]??>
@@ -43,7 +43,7 @@ public class ${ className } {
 </#if>
 </#if>
 <#if !function.requestBodyIsJson>
-<#if function.params?? || function.factors??>
+<#if ((function.params?? && function.params?size > 0) || (function.factors?? && function.factors?size > 0)) && function.httpMethod != "HttpMethod.GET">
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 </#if>
 <#if function.params??>
@@ -66,7 +66,7 @@ public class ${ className } {
 </#if>
 </#if>
 </#if>
-        ResponseEntity<${ function.resultType }> response = restTemplate.exchange("${ function.url }", ${ function.httpMethod }, new HttpEntity<>(<#if function.params?? || function.factors??>map<#else>null</#if>, headers), ${ function.resultType }.class);
+        ResponseEntity<${ function.resultType }> response = restTemplate.exchange("${ function.url }", ${ function.httpMethod }, new HttpEntity<>(<#if ((function.params?? && function.params?size > 0) || (function.factors?? && function.factors?size > 0)) && function.httpMethod != "HttpMethod.GET">map<#else>null</#if>, headers), ${ function.resultType }.class);
 
         return response;
     }

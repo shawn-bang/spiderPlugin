@@ -61,6 +61,10 @@ public class TemplateMain {
             String fileName = entry.getKey();
             String content = entry.getValue();
             JSONObject object = JSON.parseObject(content);
+            // 直接丢掉, 没有在分析范围内
+            if (object.getString("request_method").equals("CONNECT")){
+                continue;
+            }
 
             Connection connection = new Connection();
             connection.setFileName(fileName);
@@ -554,7 +558,7 @@ public class TemplateMain {
             function.setFileNames(spliceFileNameBySeparator(conns, ","));
             function.setFunctionName("do" + connection.getRequestMethod() + getFunctionName(connection.getFileName()));
             function.setHeaders(connection.getRequestHeaders());
-            function.setHttpMethod("HTTP" + "." + connection.getRequestMethod());
+            function.setHttpMethod("HttpMethod" + "." + connection.getRequestMethod());
             function.setUrl(connection.getRequestUrl());
             function.setResultType(getReturnType(connection.getResponseHeaders().get("Content-Type")));
             if (analysisMap != null)
