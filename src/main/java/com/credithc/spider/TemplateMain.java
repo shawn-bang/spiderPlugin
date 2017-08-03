@@ -551,7 +551,7 @@ public class TemplateMain {
             Map<String, Map<String, String>> analysisMap = getParamsAndFactors(conns, target);
 
             Function function = new Function();
-            function.setFileNames(spliceFileNameBySeparator(connections, ","));
+            function.setFileNames(spliceFileNameBySeparator(conns, ","));
             function.setFunctionName("do" + connection.getRequestMethod() + getFunctionName(connection.getFileName()));
             function.setHeaders(connection.getRequestHeaders());
             function.setHttpMethod("HTTP" + "." + connection.getRequestMethod());
