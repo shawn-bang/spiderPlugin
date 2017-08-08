@@ -251,6 +251,8 @@ public class TemplateMain {
             String value = entry.getValue();
             Set<String> pot = new HashSet<String>();
             pot.add(value);
+            Set<String> valueAndFileName = new HashSet<String>();
+            valueAndFileName.add(value + "?" + conn.getFileName());
             for (int i = 1; i < connections.size(); i++) {
                 Connection obj = connections.get(i);
                 Map<String, String> map = obj.getUrlParamsMap();
@@ -263,12 +265,13 @@ public class TemplateMain {
                     map = temp;
                 }
                 pot.add(map.get(key));
+                valueAndFileName.add(map.get(key) + "?" + obj.getFileName());
             }
 
             if (pot.size() == 1){
                 same.put(key, value);
             }else {
-                diff.put(key, spliceCollectionBySeparator(pot, "&"));
+                diff.put(key, spliceCollectionBySeparator(valueAndFileName, "&"));
             }
         }
 
