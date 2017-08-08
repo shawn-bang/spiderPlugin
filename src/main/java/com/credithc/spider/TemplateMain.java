@@ -587,13 +587,16 @@ public class TemplateMain {
      * @throws Exception
      */
     public static void produceFunction(List<Function> functions, Map<String, List<Connection>> groupMap, List<Connection> connections, Connection connection, String target) throws Exception {
+        int count = 0;
         for (Map.Entry<String, List<Connection>> urlGroupMapEntry : groupMap.entrySet()) {
             List<Connection> conns = urlGroupMapEntry.getValue();
             Map<String, Map<String, String>> analysisMap = getParamsAndFactors(conns, target);
 
             Function function = new Function();
             function.setFileNames(spliceFileNameBySeparator(conns, ","));
-            function.setFunctionName("do" + connection.getRequestMethod() + getFunctionName(connection.getFileName()));
+            String normal = "do" + connection.getRequestMethod() + getFunctionName(connection.getFileName());
+            String functionName = (count == 0)?normal:normal + String.format("0%d", count);
+            function.setFunctionName(functionName);
             function.setHeaders(connection.getRequestHeaders());
             function.setHttpMethod("HttpMethod" + "." + connection.getRequestMethod());
             function.setUrl(connection.getRequestUrl());
@@ -611,6 +614,7 @@ public class TemplateMain {
             }
             function.setUrl(getSyntaxUrl(connection.getRequestUrlPrefix(), analysisMap));
             functions.add(function);
+            count++;
         }
     }
 
