@@ -1,9 +1,16 @@
 package ${ package };
 
-import org.springframework.web.client.RestTemplate;
 import com.credithc.bdp.service.spider.util.CookieStoreRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.LinkedMultiValueMap;
+
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 
 
 @Component
@@ -20,7 +27,7 @@ public class ${ className } {
         String ${ realFieldName }<#if key_has_next >,</#if>
     </#list>
 </#if>
-    ) {
+    ) <#if function.url?contains("URLEncoder")>throws UnsupportedEncodingException</#if> {
 <#if function.headers??>
     <#list function.headers?keys as key>
         <#if key_index == 0>
